@@ -160,6 +160,15 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 const SizedBox(height: 16),
+                _buildOverlayButton(
+                  icon: Icons.chat,
+                  onPressed: () async {
+                    _scannerController.stop();
+                    await context.push('/assistant');
+                    if (_isCameraOn && mounted) _scannerController.start();
+                  },
+                ),
+                const SizedBox(height: 16),
                 if (_isCameraOn)
                   _buildOverlayButton(
                     icon:

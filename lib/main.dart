@@ -13,6 +13,7 @@ import 'features/settings/presentation/bloc/printer_bloc.dart';
 import 'features/settings/presentation/bloc/printer_event.dart';
 import 'features/expense/presentation/bloc/expense_bloc.dart';
 import 'features/ai_order/presentation/bloc/ai_order_bloc.dart';
+import 'features/ai_assistant/presentation/bloc/assistant_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
             create: (context) => di.sl<ExpenseBloc>()),
         BlocProvider<AiOrderBloc>(
             create: (context) => di.sl<AiOrderBloc>()),
+        BlocProvider<AssistantBloc>(
+            create: (context) => di.sl<AssistantBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Billing App',

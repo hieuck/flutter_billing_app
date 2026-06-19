@@ -19,6 +19,9 @@ import '../../features/expense/presentation/bloc/expense_bloc.dart';
 import '../../features/ai_order/domain/services/order_parser.dart';
 import '../../features/ai_order/data/services/order_parser_impl.dart';
 import '../../features/ai_order/presentation/bloc/ai_order_bloc.dart';
+import '../../features/ai_assistant/domain/services/business_assistant.dart';
+import '../../features/ai_assistant/data/services/business_assistant_impl.dart';
+import '../../features/ai_assistant/presentation/bloc/assistant_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -101,5 +104,13 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => AiOrderBloc(parser: sl()),
+  );
+
+  // Features - AI Assistant
+  sl.registerLazySingleton<BusinessAssistant>(
+    () => BusinessAssistantImpl(),
+  );
+  sl.registerFactory(
+    () => AssistantBloc(assistant: sl()),
   );
 }

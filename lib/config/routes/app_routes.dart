@@ -12,6 +12,7 @@ import '../../features/expense/presentation/pages/expense_list_page.dart';
 import '../../features/expense/presentation/pages/add_expense_page.dart';
 import '../../features/report/presentation/pages/report_page.dart';
 import '../../features/ai_order/presentation/pages/ai_order_page.dart';
+import '../../features/ai_assistant/presentation/pages/assistant_page.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -31,6 +32,10 @@ final router = GoRouter(
         GoRoute(
           path: 'ai-order',
           builder: (context, state) => const AiOrderPage(),
+        ),
+        GoRoute(
+          path: 'assistant',
+          builder: (context, state) => const AssistantPage(),
         ),
       ],
     ),
