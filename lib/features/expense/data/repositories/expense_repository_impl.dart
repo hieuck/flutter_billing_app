@@ -13,7 +13,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
       await HiveDatabase.expensesBox.put(expense.id, model);
       return const Right(null);
     } catch (e) {
-      return Left(CacheFailure(message: e.toString()));
+      return Left(CacheFailure(e.toString()));
     }
   }
 
@@ -29,7 +29,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
           .toList();
       return Right(all);
     } catch (e) {
-      return Left(CacheFailure(message: e.toString()));
+      return Left(CacheFailure(e.toString()));
     }
   }
 
@@ -41,7 +41,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
           .toList();
       return Right(all);
     } catch (e) {
-      return Left(CacheFailure(message: e.toString()));
+      return Left(CacheFailure(e.toString()));
     }
   }
 
@@ -51,7 +51,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
       await HiveDatabase.expensesBox.delete(id);
       return const Right(null);
     } catch (e) {
-      return Left(CacheFailure(message: e.toString()));
+      return Left(CacheFailure(e.toString()));
     }
   }
 }
