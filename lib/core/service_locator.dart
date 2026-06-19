@@ -16,6 +16,9 @@ import '../../features/expense/data/repositories/expense_repository_impl.dart';
 import '../../features/expense/domain/repositories/expense_repository.dart';
 import '../../features/expense/domain/usecases/expense_usecases.dart';
 import '../../features/expense/presentation/bloc/expense_bloc.dart';
+import '../../features/ai_order/domain/services/order_parser.dart';
+import '../../features/ai_order/data/services/order_parser_impl.dart';
+import '../../features/ai_order/presentation/bloc/ai_order_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -90,5 +93,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteExpenseUseCase(sl()));
   sl.registerLazySingleton<ExpenseRepository>(
     () => ExpenseRepositoryImpl(),
+  );
+
+  // Features - AI Order
+  sl.registerLazySingleton<OrderParser>(
+    () => OrderParserImpl([]),
+  );
+  sl.registerFactory(
+    () => AiOrderBloc(parser: sl()),
   );
 }

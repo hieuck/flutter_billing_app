@@ -138,6 +138,7 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             top: MediaQuery.of(context).padding.top + 16,
             right: 16,
+
             child: Column(
               children: [
                 _buildOverlayButton(
@@ -145,6 +146,15 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () async {
                     _scannerController.stop();
                     await context.push('/settings');
+                    if (_isCameraOn && mounted) _scannerController.start();
+                  },
+                ),
+                const SizedBox(height: 16),
+                _buildOverlayButton(
+                  icon: Icons.smart_toy,
+                  onPressed: () async {
+                    _scannerController.stop();
+                    await context.push('/ai-order');
                     if (_isCameraOn && mounted) _scannerController.start();
                   },
                 ),
