@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../bloc/ai_order_bloc.dart';
+import '../../../../core/widgets/primary_button.dart';
+import 'voice_tab.dart';
+import 'text_tab.dart';
+import 'photo_tab.dart';
+
+class AiOrderPage extends StatelessWidget {
+  const AiOrderPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('AI Order'), centerTitle: true),
+      body: DefaultTabController(
+        length: 3,
+        child: Column(
+          children: [
+            const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.mic), text: 'Voice'),
+                Tab(icon: Icon(Icons.text_fields), text: 'Text'),
+                Tab(icon: Icon(Icons.camera_alt), text: 'Photo'),
+              ],
+            ),
+            Expanded(
+              child: BlocConsumer<AiOrderBloc, AiOrderState>(
+                listener: (context, state) {
+                  if (state is AiOrderConfirmed) {
+                    context.pop(state.items);
+                  }
+                },
+                builder: (context, state) {
+                  return Stack(
+                    children: [
+                      const TabBarView(
+                        children: [
+                          VoiceTab(),
+                          TextTab(),
+                          PhotoTab(),
+                        ],
+                      ),
+                      if (state is AiOrderParsed)
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: _buildParsedBanner(context, state),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildParsedBanner(BuildContext context, AiOrderParsed state) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Found ${state.items.length} items',
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          PrimaryButton(
+            onPressed: () =>
+                context.read<AiOrderBloc>().add(ConfirmItemsEvent()),
+            icon: Icons.add_shopping_cart,
+            label: 'Add to Cart',
+          ),
+        ],
+      ),
+    );
+  }
+}
