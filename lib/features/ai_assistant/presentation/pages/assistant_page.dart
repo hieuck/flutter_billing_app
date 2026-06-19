@@ -79,7 +79,7 @@ class AssistantPage extends StatelessWidget {
             itemCount: messages.length,
             itemBuilder: (context, index) {
               final msg = messages[index];
-              return _buildMessageBubble(msg);
+              return _buildMessageBubble(context, msg);
             },
           ),
         ),
@@ -99,7 +99,7 @@ class AssistantPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMessageBubble(ChatMessage msg) {
+  Widget _buildMessageBubble(BuildContext context, ChatMessage msg) {
     return Align(
       alignment: msg.isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
