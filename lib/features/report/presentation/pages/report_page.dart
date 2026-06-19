@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:billing_app/l10n/app_localizations.dart';
 import 'package:billing_app/core/data/hive_database.dart';
 import 'package:billing_app/core/theme/app_theme.dart';
 import 'package:billing_app/features/billing/domain/entities/invoice.dart';
