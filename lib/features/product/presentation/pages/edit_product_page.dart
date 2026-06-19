@@ -21,12 +21,14 @@ class _EditProductPageState extends State<EditProductPage> {
   final _formKey = GlobalKey<FormState>();
   late String _name;
   late double _price;
+  late double _costPrice;
 
   @override
   void initState() {
     super.initState();
     _name = widget.product.name;
     _price = widget.product.price;
+    _costPrice = widget.product.costPrice ?? 0;
   }
 
   void _submit() {
@@ -38,6 +40,7 @@ class _EditProductPageState extends State<EditProductPage> {
         name: _name,
         barcode: widget.product.barcode,
         price: _price,
+        costPrice: _costPrice > 0 ? _costPrice : null,
       );
 
       context.read<ProductBloc>().add(UpdateProduct(updatedProduct));
@@ -128,6 +131,23 @@ class _EditProductPageState extends State<EditProductPage> {
                     ),
                     validator: AppValidators.price,
                     onSaved: (value) => _price = double.parse(value!),
+                  ),
+                  const SizedBox(height: 24),
+                  const InputLabel(text: 'Cost Price'),
+                  TextFormField(
+                    initialValue: _costPrice > 0 ? _costPrice.toStringAsFixed(2) : '',
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    decoration: const InputDecoration(
+                      hintText: '0.00',
+                      prefixText: '₹ ',
+                      prefixStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
+                    ),
+                    validator: AppValidators.price,
+                    onSaved: (value) => _costPrice = double.parse(value!),
                   ),
                 ],
               ),
