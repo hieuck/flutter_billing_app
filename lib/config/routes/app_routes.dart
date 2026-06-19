@@ -10,6 +10,7 @@ import '../../features/billing/presentation/pages/checkout_page.dart';
 import '../../features/product/domain/entities/product.dart';
 import '../../features/expense/presentation/pages/expense_list_page.dart';
 import '../../features/expense/presentation/pages/add_expense_page.dart';
+import '../../features/report/presentation/pages/report_page.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -31,6 +32,10 @@ final router = GoRouter(
     GoRoute(
       path: '/settings',
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: '/report',
+      builder: (context, state) => const ReportPage(),
     ),
     GoRoute(
       path: '/products',
