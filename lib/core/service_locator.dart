@@ -12,6 +12,10 @@ import '../../features/settings/domain/repositories/printer_repository.dart';
 import '../../features/settings/presentation/bloc/printer_bloc.dart';
 import '../../features/billing/data/repositories/invoice_repository_impl.dart';
 import '../../features/billing/domain/repositories/invoice_repository.dart';
+import '../../features/expense/data/repositories/expense_repository_impl.dart';
+import '../../features/expense/domain/repositories/expense_repository.dart';
+import '../../features/expense/domain/usecases/expense_usecases.dart';
+import '../../features/expense/presentation/bloc/expense_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -70,5 +74,21 @@ Future<void> init() async {
   // Features - Billing
   sl.registerLazySingleton<InvoiceRepository>(
     () => InvoiceRepositoryImpl(),
+  );
+
+  // Features - Expense
+  sl.registerFactory(
+    () => ExpenseBloc(
+      addExpenseUseCase: sl(),
+      getExpensesByDateRangeUseCase: sl(),
+      deleteExpenseUseCase: sl(),
+    ),
+  );
+  sl.registerLazySingleton(() => AddExpenseUseCase(sl()));
+  sl.registerLazySingleton(() => GetExpensesByDateRangeUseCase(sl()));
+  sl.registerLazySingleton(() => GetAllExpensesUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteExpenseUseCase(sl()));
+  sl.registerLazySingleton<ExpenseRepository>(
+    () => ExpenseRepositoryImpl(),
   );
 }
