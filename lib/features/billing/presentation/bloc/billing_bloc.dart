@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/cart_item.dart';
 import 'package:billing_app/features/product/domain/entities/product.dart';
 import 'package:billing_app/features/product/domain/usecases/product_usecases.dart';
+import 'package:billing_app/features/billing/domain/repositories/invoice_repository.dart';
+import 'package:billing_app/features/billing/domain/entities/invoice.dart';
 import '../../../../core/utils/printer_helper.dart';
 import '../../../../core/data/hive_database.dart';
 
@@ -11,15 +13,19 @@ part 'billing_state.dart';
 
 class BillingBloc extends Bloc<BillingEvent, BillingState> {
   final GetProductByBarcodeUseCase getProductByBarcodeUseCase;
+  final InvoiceRepository invoiceRepository;
 
-  BillingBloc({required this.getProductByBarcodeUseCase})
-      : super(const BillingState()) {
+  BillingBloc({
+    required this.getProductByBarcodeUseCase,
+    required this.invoiceRepository,
+  }) : super(const BillingState()) {
     on<ScanBarcodeEvent>(_onScanBarcode);
     on<AddProductToCartEvent>(_onAddProductToCart);
     on<RemoveProductFromCartEvent>(_onRemoveProductFromCart);
     on<UpdateQuantityEvent>(_onUpdateQuantity);
     on<ClearCartEvent>(_onClearCart);
     on<PrintReceiptEvent>(_onPrintReceipt);
+    on<CompleteOrderEvent>(_onCompleteOrder);
   }
 
   Future<void> _onScanBarcode(
@@ -80,6 +86,27 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
 
   void _onClearCart(ClearCartEvent event, Emitter<BillingState> emit) {
     emit(const BillingState());
+  }
+
+  Future<void> _onCompleteOrder(
+      CompleteOrderEvent event, Emitter<BillingState> emit) async {
+    if (state.cartItems.isEmpty) return;
+
+    final totalCost = state.cartItems.fold<double>(
+      0, (sum, item) => sum + (item.product.costPrice ?? 0) * item.quantity);
+
+    final invoice = Invoice(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      items: state.cartItems,
+      totalAmount: state.totalAmount,
+      totalCost: totalCost,
+    );
+
+    final result = await invoiceRepository.saveInvoice(invoice);
+    result.fold(
+      (failure) => emit(state.copyWith(error: failure.message)),
+      (_) => emit(const BillingState()),
+    );
   }
 
   Future<void> _onPrintReceipt(

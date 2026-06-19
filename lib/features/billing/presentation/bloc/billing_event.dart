@@ -37,6 +37,10 @@ class UpdateQuantityEvent extends BillingEvent {
 
 class ClearCartEvent extends BillingEvent {}
 
+class CompleteOrderEvent extends BillingEvent {
+  const CompleteOrderEvent();
+}
+
 class PrintReceiptEvent extends BillingEvent {
   final String shopName;
   final String address1;
