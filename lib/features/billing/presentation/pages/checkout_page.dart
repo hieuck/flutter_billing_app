@@ -1,4 +1,5 @@
 import 'package:billing_app/core/widgets/primary_button.dart';
+import 'package:billing_app/core/utils/tts_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -194,7 +195,37 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                           ),
                                         ],
                                       )
-                                    : const SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
+                                if (upiId.isNotEmpty) ...[
+                                  const SizedBox(height: 12),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton.icon(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                      ),
+                                      onPressed: () {
+                                        final tts = TtsHelper();
+                                        tts.announcePayment(billingState.totalAmount);
+                                        context.read<BillingBloc>().add(const CompleteOrderEvent());
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Paid ${billingState.totalAmount.toStringAsFixed(0)} VND'),
+                                            backgroundColor: Colors.green,
+                                          ),
+                                        );
+                                        Future.delayed(const Duration(seconds: 2), () {
+                                          if (mounted) context.go('/');
+                                        });
+                                      },
+                                      icon: const Icon(Icons.check_circle),
+                                      label: const Text('Mark as Paid',
+                                          style: TextStyle(fontWeight: FontWeight.bold)),
+                                    ),
+                                  ),
+                                ],
                                 const SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment:
