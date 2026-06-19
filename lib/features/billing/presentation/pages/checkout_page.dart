@@ -1,6 +1,7 @@
 import 'package:billing_app/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
@@ -28,7 +29,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Checkout',
+            title: Text(AppLocalizations.of(context)!.checkout,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -108,7 +109,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         _buildHeaderCell(
                                             'Price', TextAlign.right),
                                         _buildHeaderCell(
-                                            'Total', TextAlign.right),
+                                            AppLocalizations.of(context)!.total, TextAlign.right),
                                       ],
                                     ),
                                     // Items rows
@@ -240,7 +241,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         backgroundColor: Colors.red));
                               }
                             },
-                            label: 'Print Receipt',
+                            label: AppLocalizations.of(context)!.printReceipt,
                             icon: Icons.print,
                             isLoading: billingState.isPrinting,
                           ),

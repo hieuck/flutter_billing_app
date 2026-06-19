@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../bloc/ai_order_bloc.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -13,16 +14,16 @@ class AiOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Order'), centerTitle: true),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.aiOrder), centerTitle: true),
       body: DefaultTabController(
         length: 3,
         child: Column(
           children: [
-            const TabBar(
+            TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.mic), text: 'Voice'),
-                Tab(icon: Icon(Icons.text_fields), text: 'Text'),
-                Tab(icon: Icon(Icons.camera_alt), text: 'Photo'),
+                Tab(icon: Icon(Icons.mic), text: AppLocalizations.of(context)!.voice),
+                Tab(icon: Icon(Icons.text_fields), text: AppLocalizations.of(context)!.text),
+                Tab(icon: Icon(Icons.camera_alt), text: AppLocalizations.of(context)!.photo),
               ],
             ),
             Expanded(
@@ -77,7 +78,7 @@ class AiOrderPage extends StatelessWidget {
             onPressed: () =>
                 context.read<AiOrderBloc>().add(ConfirmItemsEvent()),
             icon: Icons.add_shopping_cart,
-            label: 'Add to Cart',
+            label: AppLocalizations.of(context)!.addToCart,
           ),
         ],
       ),

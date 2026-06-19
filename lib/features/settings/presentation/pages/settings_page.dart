@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_settings/app_settings.dart';
 
@@ -28,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings',
+        title: Text(AppLocalizations.of(context)!.settings,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -103,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 _buildListItem(
                   icon: Icons.qr_code_scanner,
-                  title: 'Products',
+                  title: AppLocalizations.of(context)!.products,
                   subtitle: 'Manage stock and barcodes',
                   onTap: () => context.push('/products'),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:billing_app/core/data/hive_database.dart';
 import 'package:billing_app/core/theme/app_theme.dart';
 import 'package:billing_app/features/billing/domain/entities/invoice.dart';
@@ -49,7 +50,7 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(AppLocalizations.of(context)!.dashboard),
         centerTitle: true,
       ),
       body: _loading
@@ -85,7 +86,7 @@ class _ReportPageState extends State<ReportPage> {
         ),
         const SizedBox(width: 12),
         _SummaryCard(
-          title: 'Expenses',
+          title: AppLocalizations.of(context)!.expenses,
           amount: _totalExpense,
           color: Colors.red,
           icon: Icons.trending_down,
@@ -207,7 +208,7 @@ class _ReportPageState extends State<ReportPage> {
                       : [
                           PieChartSectionData(
                             value: 100,
-                            title: 'No data',
+                            title: AppLocalizations.of(context)!.noData,
                             color: Colors.grey[300]!,
                             radius: 50,
                           ),
