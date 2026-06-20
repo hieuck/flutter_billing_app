@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/data/hive_database.dart';
+import '../../../../core/utils/currency_helper.dart';
 import '../../../billing/data/models/invoice_model.dart';
 import '../../../expense/data/models/expense_model.dart';
 import '../services/intent_parser.dart';
@@ -8,7 +8,6 @@ import '../../domain/services/business_assistant.dart';
 
 class BusinessAssistantImpl implements BusinessAssistant {
   final IntentParser _parser = IntentParser();
-  final _currency = NumberFormat.currency(symbol: '₫', decimalDigits: 0);
 
   @override
   Future<String> answer(String question) async {
@@ -46,7 +45,7 @@ class BusinessAssistantImpl implements BusinessAssistant {
     final total = invoices.fold<double>(0, (s, m) => s + m.totalAmount);
     final count = invoices.length;
 
-    return '$timeLabel, doanh thu là ${_currency.format(total)} từ $count đơn hàng.';
+    return '$timeLabel, doanh thu là ${CurrencyHelper.format(total)} từ $count đơn hàng.';
   }
 
   String _answerExpense(DateTimeRange range, String timeLabel) {
@@ -55,7 +54,7 @@ class BusinessAssistantImpl implements BusinessAssistant {
     final total = expenses.fold<double>(0, (s, e) => s + e.amount);
     final count = expenses.length;
 
-    return '$timeLabel, tổng chi phí là ${_currency.format(total)} từ $count khoản chi.';
+    return '$timeLabel, tổng chi phí là ${CurrencyHelper.format(total)} từ $count khoản chi.';
   }
 
   String _answerProfit(DateTimeRange range, String timeLabel) {
@@ -68,9 +67,9 @@ class BusinessAssistantImpl implements BusinessAssistant {
     final cost = expenses.fold<double>(0, (s, e) => s + e.amount);
     final profit = revenue - cost;
 
-    return '$timeLabel, doanh thu ${_currency.format(revenue)}, '
-        'chi phí ${_currency.format(cost)}, '
-        '${profit >= 0 ? "lãi" : "lỗ"} ${_currency.format(profit.abs())}.';
+    return '$timeLabel, doanh thu ${CurrencyHelper.format(revenue)}, '
+        'chi phí ${CurrencyHelper.format(cost)}, '
+        '${profit >= 0 ? "lãi" : "lỗ"} ${CurrencyHelper.format(profit.abs())}.';
   }
 
   String _answerTopProducts(DateTimeRange range, String timeLabel) {

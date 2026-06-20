@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:billing_app/l10n/app_localizations.dart';
 import 'package:billing_app/core/data/hive_database.dart';
+import 'package:billing_app/core/utils/currency_helper.dart';
 import 'package:billing_app/core/theme/app_theme.dart';
 import 'package:billing_app/features/billing/domain/entities/invoice.dart';
 
@@ -257,11 +258,7 @@ class _ReportPageState extends State<ReportPage> {
                   .map((inv) => ListTile(
                         leading: const Icon(Icons.shopping_bag),
                         title: Text('Order #${inv.id.substring(0, 6)}'),
-                        trailing: Text(
-                            NumberFormat.currency(
-                                    symbol: '₫', decimalDigits: 0)
-                                .format(inv.totalAmount)),
-                      )),
+                        trailing: Text(CurrencyHelper.format(inv.totalAmount)),
           ],
         ),
       ),
@@ -294,8 +291,7 @@ class _SummaryCard extends StatelessWidget {
               Text(title, style: TextStyle(
                   fontSize: 12, color: color, fontWeight: FontWeight.bold)),
               const SizedBox(height: 4),
-              Text(NumberFormat.currency(symbol: '₫', decimalDigits: 0)
-                  .format(amount),
+              Text(CurrencyHelper.format(amount),
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

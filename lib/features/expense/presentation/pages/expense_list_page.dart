@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:billing_app/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import '../../../../core/utils/currency_helper.dart';
 import '../bloc/expense_bloc.dart';
 import '../../domain/entities/expense_category.dart';
 
@@ -60,7 +61,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                       Text(AppLocalizations.of(context)!.itemsTotal(state.expenses.length),
                           style: const TextStyle(fontSize: 14)),
                       Text(
-                        'Total: ${NumberFormat.currency(symbol: '₫', decimalDigits: 0).format(total)}',
+                        'Total: ${CurrencyHelper.format(total)}',
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -91,9 +92,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                                   fontWeight: FontWeight.bold)),
                           subtitle: Text(expense.note ?? ''),
                           trailing: Text(
-                            NumberFormat.currency(
-                                    symbol: '₫', decimalDigits: 0)
-                                .format(expense.amount),
+                            CurrencyHelper.format(expense.amount),
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
