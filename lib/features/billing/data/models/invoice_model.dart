@@ -4,7 +4,7 @@ import 'package:billing_app/features/billing/domain/entities/cart_item.dart';
 
 part 'invoice_model.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 4)
 class InvoiceModel {
   @HiveField(0)
   final String id;
