@@ -18,20 +18,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final MobileScannerController _scannerController = MobileScannerController(
-    detectionSpeed: DetectionSpeed.normal,
-    returnImage: false,
-  );
+  MobileScannerController? _scannerController;
+  bool _scannerInitialized = false;
 
   bool _isCameraOn = true;
   bool _isFlashOn = false;
 
-  // Cooldown mapping to prevent rapid firing of the same barcode
   final Map<String, DateTime> _lastScanTimes = {};
 
   @override
+  void initState() {
+    super.initState();
+    try {
+      _scannerController = MobileScannerController(
+        detectionSpeed: DetectionSpeed.normal,
+        returnImage: false,
+      );
+      _scannerInitialized = true;
+    } catch (e) {
+      debugPrint('Scanner init failed: $e');
+      _isCameraOn = false;
+    }
+  }
+
+  @override
   void dispose() {
-    _scannerController.dispose();
+    _scannerController?.dispose();
     super.dispose();
   }
 
@@ -54,10 +66,12 @@ class _HomePageState extends State<HomePage> {
         _lastScanTimes[rawValue] = now;
 
         // Vibrate
-        final hasVibrator = await Vibration.hasVibrator();
-        if (hasVibrator == true) {
-          Vibration.vibrate();
-        }
+        try {
+          final hasVibrator = await Vibration.hasVibrator();
+          if (hasVibrator == true) {
+            Vibration.vibrate();
+          }
+        } catch (_) {} // Silently fail on devices without vibrator
 
         if (mounted) {
           context.read<BillingBloc>().add(ScanBarcodeEvent(rawValue));
@@ -112,9 +126,9 @@ class _HomePageState extends State<HomePage> {
           onPressed: state.cartItems.isEmpty
               ? null
               : () async {
-                  _scannerController.stop();
-                  await context.push('/checkout');
-                  if (_isCameraOn && mounted) _scannerController.start();
+                  _scannerController?.stop();
+                    await context.push('/checkout');
+                    if (_isCameraOn && mounted) _scannerController?.start();
                 },
           icon: Icons.payment,
           label: 'Review Order',
@@ -129,11 +143,14 @@ class _HomePageState extends State<HomePage> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          MobileScanner(
-            controller: _scannerController,
-            onDetect: _onDetect,
-          ),
-          if (!_isCameraOn) _buildCameraOffState(),
+          if (_scannerInitialized && _scannerController != null)
+            MobileScanner(
+              controller: _scannerController!,
+              onDetect: _onDetect,
+            )
+          else
+            _buildCameraOffState(),
+
 
           // Overlay Actions (Top Right)
           Positioned(
@@ -145,51 +162,50 @@ class _HomePageState extends State<HomePage> {
                 _buildOverlayButton(
                   icon: Icons.settings,
                   onPressed: () async {
-                    _scannerController.stop();
+                    _scannerController?.stop();
                     await context.push('/settings');
-                    if (_isCameraOn && mounted) _scannerController.start();
+                    if (_isCameraOn && mounted) _scannerController?.start();
                   },
                 ),
                 const SizedBox(height: 16),
                 _buildOverlayButton(
                   icon: Icons.smart_toy,
                   onPressed: () async {
-                    _scannerController.stop();
+                    _scannerController?.stop();
                     await context.push('/ai-order');
-                    if (_isCameraOn && mounted) _scannerController.start();
+                    if (_isCameraOn && mounted) _scannerController?.start();
                   },
                 ),
                 const SizedBox(height: 16),
                 _buildOverlayButton(
                   icon: Icons.chat,
                   onPressed: () async {
-                    _scannerController.stop();
+                    _scannerController?.stop();
                     await context.push('/assistant');
-                    if (_isCameraOn && mounted) _scannerController.start();
+                    if (_isCameraOn && mounted) _scannerController?.start();
                   },
                 ),
                 const SizedBox(height: 16),
-                if (_isCameraOn)
+                if (_isCameraOn && _scannerInitialized)
                   _buildOverlayButton(
                     icon:
                         _isFlashOn ? Icons.flashlight_off : Icons.flashlight_on,
                     onPressed: () {
                       setState(() => _isFlashOn = !_isFlashOn);
-                      _scannerController.toggleTorch();
+                      _scannerController?.toggleTorch();
                     },
                   ),
-                if (_isCameraOn) const SizedBox(height: 16),
+                if (_isCameraOn && _scannerInitialized) const SizedBox(height: 16),
                 _buildOverlayButton(
                   icon: _isCameraOn ? Icons.videocam : Icons.videocam_off,
-                  // color:  Colors.white24 ,
                   onPressed: () {
                     setState(() {
                       _isCameraOn = !_isCameraOn;
                     });
-                    if (_isCameraOn) {
-                      _scannerController.start();
+                    if (_isCameraOn && _scannerInitialized) {
+                      _scannerController?.start();
                     } else {
-                      _scannerController.stop();
+                      _scannerController?.stop();
                     }
                   },
                 ),
@@ -269,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold)),
             onPressed: () {
               setState(() => _isCameraOn = true);
-              _scannerController.start();
+              _scannerController?.start();
             },
           )
         ],

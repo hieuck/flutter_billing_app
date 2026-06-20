@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,8 +18,12 @@ import 'features/ai_assistant/presentation/bloc/assistant_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HiveDatabase.init();
-  await di.init();
+  try {
+    await HiveDatabase.init();
+    await di.init();
+  } catch (e) {
+    debugPrint('Init error: $e');
+  }
   runApp(const MyApp());
 }
 
