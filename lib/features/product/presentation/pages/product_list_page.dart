@@ -61,8 +61,8 @@ class _ProductListPageState extends State<ProductListPage> {
               size: 28, color: Theme.of(context).primaryColor),
           onPressed: () => context.pop(),
         ),
-        title: const Text('Product Management',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: Text(AppLocalizations.of(context)!.productManagement,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         centerTitle: true,
       ),
       body: Column(
@@ -82,7 +82,7 @@ class _ProductListPageState extends State<ProductListPage> {
                           controller: _searchController,
                           textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
-                            hintText: 'Scan or enter barcode',
+                            hintText: AppLocalizations.of(context)!.barcodeHint,
                             prefixIcon: Icon(
                               Icons.search,
                               color: Colors.grey[400],
@@ -108,8 +108,8 @@ class _ProductListPageState extends State<ProductListPage> {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text('Tap the icon to open camera scanner',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF4C669A))),
+                  Text(AppLocalizations.of(context)!.openCameraScanner,
+                      style: const TextStyle(fontSize: 12, color: Color(0xFF4C669A))),
                 ],
               );
             }),
@@ -144,8 +144,8 @@ class _ProductListPageState extends State<ProductListPage> {
                   if (state.status == ProductStatus.error) {
                     return Center(child: Text('Error: ${state.message}'));
                   }
-                  return const Center(
-                      child: Text('No products found. Add some!'));
+                  return Center(
+                      child: Text(AppLocalizations.of(context)!.noProductsFound));
                 }
 
                 final filteredProducts = state.products
@@ -155,8 +155,8 @@ class _ProductListPageState extends State<ProductListPage> {
                     .toList();
 
                 if (filteredProducts.isEmpty) {
-                  return const Center(
-                      child: Text('No products match your search.'));
+                  return Center(
+                      child: Text(AppLocalizations.of(context)!.noProductsMatchSearch));
                 }
 
                 return ListView.separated(
@@ -265,8 +265,8 @@ class _ProductListPageState extends State<ProductListPage> {
       context: context,
       builder: (innerContext) {
         return AlertDialog(
-          title: const Text('Delete Product'),
-          content: Text('Are you sure you want to delete ${product.name}?'),
+          title: Text(AppLocalizations.of(context)!.deleteProduct),
+          content: Text(AppLocalizations.of(context)!.deleteConfirm(product.name)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(innerContext),

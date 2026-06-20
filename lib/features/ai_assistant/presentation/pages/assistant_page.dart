@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:billing_app/l10n/app_localizations.dart';
 import '../bloc/assistant_bloc.dart';
 
 class AssistantPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class AssistantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Assistant'),
+        title: Text(AppLocalizations.of(context)!.aiAssistant),
         centerTitle: true,
         actions: [
           IconButton(
@@ -40,20 +41,20 @@ class AssistantPage extends StatelessWidget {
         children: [
           const Icon(Icons.smart_toy, size: 80, color: Colors.grey),
           const SizedBox(height: 20),
-          const Text('Ask me about your business!',
-              style: TextStyle(fontSize: 18)),
+          Text(AppLocalizations.of(context)!.askBusiness,
+              style: const TextStyle(fontSize: 18)),
           const SizedBox(height: 8),
-          const Text('Try: "Doanh thu hôm nay?"',
-              style: TextStyle(color: Colors.grey)),
+          Text(AppLocalizations.of(context)!.tryAsking,
+              style: const TextStyle(color: Colors.grey)),
           const SizedBox(height: 24),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              _suggestionChip(context, 'Doanh thu hôm nay?'),
-              _suggestionChip(context, 'Chi phí tháng này?'),
-              _suggestionChip(context, 'Lợi nhuận?'),
-              _suggestionChip(context, 'Sản phẩm bán chạy?'),
+              _suggestionChip(context, AppLocalizations.of(context)!.revenueToday),
+              _suggestionChip(context, AppLocalizations.of(context)!.expensesThisMonth),
+              _suggestionChip(context, AppLocalizations.of(context)!.profitQuery),
+              _suggestionChip(context, AppLocalizations.of(context)!.topProductsQuery),
             ],
           ),
         ],
@@ -133,8 +134,8 @@ class AssistantPage extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: controller,
-              decoration: const InputDecoration(
-                hintText: 'Ask a question...',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.askQuestion,
                 border: OutlineInputBorder(),
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 16, vertical: 12),

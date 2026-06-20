@@ -47,8 +47,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
           body: BlocConsumer<BillingBloc, BillingState>(
             listener: (context, state) {
               if (state.printSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Printed successfully'),
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(AppLocalizations.of(context)!.printedSuccess),
                     backgroundColor: Colors.green));
                 // context.read<BillingBloc>().add(ClearCartEvent());
                 // context.go('/');
@@ -106,9 +106,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                       ),
                                       children: [
                                         _buildHeaderCell(
-                                            'Product Name', TextAlign.left),
+                                            AppLocalizations.of(context)!.productName, TextAlign.left),
                                         _buildHeaderCell(
-                                            'Price', TextAlign.right),
+                                            AppLocalizations.of(context)!.price, TextAlign.right),
                                         _buildHeaderCell(
                                             AppLocalizations.of(context)!.total, TextAlign.right),
                                       ],
@@ -175,9 +175,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 upiId.isNotEmpty
                                     ? Column(
                                         children: [
-                                          const Text(
-                                            'Scan to Pay',
-                                            style: TextStyle(
+                                          Text(
+                                            AppLocalizations.of(context)!.scanToPay,
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black87,
@@ -221,8 +221,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         });
                                       },
                                       icon: const Icon(Icons.check_circle),
-                                      label: const Text('Mark as Paid',
-                                          style: TextStyle(fontWeight: FontWeight.bold)),
+                                      label: Text(AppLocalizations.of(context)!.markAsPaid,
+                                          style: const TextStyle(fontWeight: FontWeight.bold)),
                                     ),
                                   ),
                                 ],
@@ -232,7 +232,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'GRAND TOTAL',
+                                      AppLocalizations.of(context)!.grandTotal,
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -266,9 +266,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         footer: shopState.shop.footerText));
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                         content:
-                                            Text('Shop details not loaded'),
+                                            Text(AppLocalizations.of(context)!.shopDetailsNotLoaded),
                                         backgroundColor: Colors.red));
                               }
                             },

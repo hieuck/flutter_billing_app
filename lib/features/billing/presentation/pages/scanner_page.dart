@@ -101,14 +101,14 @@ class _ScannerPageState extends State<ScannerPage> {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 40,
             left: 0,
             right: 0,
             child: Text(
-              'Align barcode within frame',
+              AppLocalizations.of(context)!.alignBarcode,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ],

@@ -71,7 +71,7 @@ class AiOrderPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Found ${state.items.length} items',
+          Text(AppLocalizations.of(context)!.foundItems(state.items.length),
               style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           PrimaryButton(

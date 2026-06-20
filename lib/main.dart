@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             create: (context) => di.sl<AssistantBloc>()),
       ],
       child: MaterialApp.router(
-        title: 'Billing App',
+        title: AppLocalizations.of(context)!.appTitle,
         theme: AppTheme.lightTheme,
         routerConfig: router,
         debugShowCheckedModeBanner: false,

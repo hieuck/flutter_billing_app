@@ -52,7 +52,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Expense'),
+        title: Text(AppLocalizations.of(context)!.addExpense),
         centerTitle: true,
       ),
       body: BlocListener<ExpenseBloc, ExpenseState>(
@@ -70,7 +70,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const InputLabel(text: 'Amount'),
+                InputLabel(text: AppLocalizations.of(context)!.expenseAmount),
                 TextFormField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
@@ -81,7 +81,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   validator: AppValidators.price,
                 ),
                 const SizedBox(height: 24),
-                const InputLabel(text: 'Category'),
+                InputLabel(text: AppLocalizations.of(context)!.expenseCategory),
                 DropdownButtonFormField<ExpenseCategory>(
                   value: _category,
                   items: ExpenseCategory.values.map((c) {
@@ -90,7 +90,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   onChanged: (v) => setState(() => _category = v!),
                 ),
                 const SizedBox(height: 24),
-                const InputLabel(text: 'Note (optional)'),
+                InputLabel(text: AppLocalizations.of(context)!.expenseNote),
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'e.g. Mua bột mì'),
                   onSaved: (v) => _note = v,
@@ -99,7 +99,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 PrimaryButton(
                   onPressed: _submit,
                   icon: Icons.save,
-                  label: 'Save Expense',
+                  label: AppLocalizations.of(context)!.saveExpense,
                 ),
               ],
             ),

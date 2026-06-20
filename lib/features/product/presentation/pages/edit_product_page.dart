@@ -59,8 +59,8 @@ class _EditProductPageState extends State<EditProductPage> {
                 size: 32, color: Theme.of(context).primaryColor),
             onPressed: () => context.pop(),
           ),
-          title: const Text('Edit Product',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          title: Text(AppLocalizations.of(context)!.editProduct,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -89,7 +89,7 @@ class _EditProductPageState extends State<EditProductPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('BARCODE',
+                            Text(AppLocalizations.of(context)!.barcodeLabel,
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class _EditProductPageState extends State<EditProductPage> {
                     ),
                   ),
 
-                  const InputLabel(text: 'Product Name'),
+                  InputLabel(text: AppLocalizations.of(context)!.productName),
 
                   TextFormField(
                     initialValue: _name,
@@ -117,7 +117,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  const InputLabel(text: 'Price'),
+                  InputLabel(text: AppLocalizations.of(context)!.price),
 
                   TextFormField(
                     initialValue: _price.toStringAsFixed(2),
@@ -134,7 +134,7 @@ class _EditProductPageState extends State<EditProductPage> {
                     onSaved: (value) => _price = double.parse(value!),
                   ),
                   const SizedBox(height: 24),
-                  const InputLabel(text: 'Cost Price'),
+                  InputLabel(text: AppLocalizations.of(context)!.costPrice),
                   TextFormField(
                     initialValue: _costPrice > 0 ? _costPrice.toStringAsFixed(2) : '',
                     keyboardType:
@@ -158,7 +158,7 @@ class _EditProductPageState extends State<EditProductPage> {
         bottomNavigationBar: PrimaryButton(
           onPressed: _submit,
           icon: Icons.save,
-          label: 'Save Changes',
+          label: AppLocalizations.of(context)!.saveChanges,
         ));
   }
 }

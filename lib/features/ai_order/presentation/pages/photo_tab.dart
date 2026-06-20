@@ -14,8 +14,8 @@ class PhotoTab extends StatelessWidget {
         children: [
           const Icon(Icons.camera_alt, size: 80, color: Colors.grey),
           const SizedBox(height: 20),
-          const Text('Take a photo of a menu or order list',
-              style: TextStyle(fontSize: 16)),
+          Text(AppLocalizations.of(context)!.takePhotoDesc,
+              style: const TextStyle(fontSize: 16)),
           const SizedBox(height: 20),
           ElevatedButton.icon(
             onPressed: () {
@@ -24,7 +24,7 @@ class PhotoTab extends StatelessWidget {
                   );
             },
             icon: const Icon(Icons.camera),
-            label: const Text('Take Photo'),
+            label: Text(AppLocalizations.of(context)!.takePhoto),
           ),
         ],
       ),

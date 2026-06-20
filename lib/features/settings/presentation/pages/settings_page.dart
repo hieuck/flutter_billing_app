@@ -99,20 +99,20 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 24),
 
             // Management Section
-            _buildSectionHeader('Management'),
+            _buildSectionHeader(AppLocalizations.of(context)!.management),
             _buildListGroup(
               children: [
                 _buildListItem(
                   icon: Icons.qr_code_scanner,
                   title: AppLocalizations.of(context)!.products,
-                  subtitle: 'Manage stock and barcodes',
+                  subtitle: AppLocalizations.of(context)!.manageStockAndBarcodes,
                   onTap: () => context.push('/products'),
                 ),
                 _buildDivider(),
                 _buildListItem(
                   icon: Icons.storefront,
-                  title: 'Shop Details',
-                  subtitle: 'Edit business info & address',
+                  title: AppLocalizations.of(context)!.shopDetails,
+                  subtitle: AppLocalizations.of(context)!.editBusinessInfo,
                   onTap: () => context.push('/shop'),
                 ),
               ],
@@ -121,7 +121,7 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 24),
 
             // Hardware Section
-            _buildSectionHeader('Hardware'),
+            _buildSectionHeader(AppLocalizations.of(context)!.hardware),
             BlocConsumer<PrinterBloc, PrinterState>(
               listener: (context, state) {
                 if (state.errorMessage != null) {
@@ -129,8 +129,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       content: Text(state.errorMessage!),
                       backgroundColor: Colors.red));
                 } else if (state.status == PrinterStatus.connected) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Connected to printer'),
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(AppLocalizations.of(context)!.printerConnected),
                       backgroundColor: Colors.green));
                 }
               },
@@ -139,13 +139,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   children: [
                     _buildListItem(
                       icon: Icons.print,
-                      title: 'Print Device',
+                      title: AppLocalizations.of(context)!.printDevice,
                       subtitleWidget: Row(
                         children: [
                           Text(
                             state.connectedMac != null
-                                ? (state.connectedName ?? 'Printer connected')
-                                : 'No printer connected',
+                                ? (state.connectedName ?? AppLocalizations.of(context)!.printerConnected)
+                                : AppLocalizations.of(context)!.noPrinterConnected,
                             style: TextStyle(
                                 fontSize: 12, color: Colors.grey[500]),
                           ),
@@ -159,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(color: Colors.teal[200]!)),
                               child: Text(
-                                'CONNECTED',
+                                AppLocalizations.of(context)!.connected,
                                 style: TextStyle(
                                     fontSize: 9,
                                     fontWeight: FontWeight.bold,
@@ -206,7 +206,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               child: Text(
-                "To connect a new device, tap on the Settings gear to pair in phone's Bluetooth settings, then return and hit Refresh.",
+                AppLocalizations.of(context)!.bluetoothInstructions,
                 style: TextStyle(
                     fontSize: 11,
                     fontStyle: FontStyle.italic,

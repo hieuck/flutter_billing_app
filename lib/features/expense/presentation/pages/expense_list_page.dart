@@ -44,7 +44,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
             return Center(child: Text('Error: ${state.message}'));
           }
           if (state is ExpenseLoaded && state.expenses.isEmpty) {
-            return const Center(child: Text('No expenses recorded yet'));
+            return Center(child: Text(AppLocalizations.of(context)!.noExpensesYet));
           }
           if (state is ExpenseLoaded) {
             final total = state.expenses.fold<double>(
@@ -57,7 +57,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${state.expenses.length} items',
+                      Text(AppLocalizations.of(context)!.itemsTotal(state.expenses.length),
                           style: const TextStyle(fontSize: 14)),
                       Text(
                         'Total: ${NumberFormat.currency(symbol: '₫', decimalDigits: 0).format(total)}',

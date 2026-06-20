@@ -44,7 +44,7 @@ class _TextTabState extends State<TextTab> {
             controller: _controller,
             maxLines: 8,
             decoration: InputDecoration(
-              hintText: 'Paste or type order here...',
+              hintText: AppLocalizations.of(context)!.pasteHint,
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.content_paste),
@@ -56,7 +56,7 @@ class _TextTabState extends State<TextTab> {
           ElevatedButton.icon(
             onPressed: _parseText,
             icon: const Icon(Icons.search),
-            label: const Text('Parse Order'),
+            label: Text(AppLocalizations.of(context)!.parseOrder),
           ),
         ],
       ),

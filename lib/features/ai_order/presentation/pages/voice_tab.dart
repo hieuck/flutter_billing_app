@@ -53,7 +53,9 @@ class _VoiceTabState extends State<VoiceTab> {
           ),
           const SizedBox(height: 24),
           Text(
-            _isListening ? 'Listening...' : 'Tap and hold to speak',
+            _isListening
+                ? AppLocalizations.of(context)!.listening
+                : AppLocalizations.of(context)!.tapAndHold,
             style: const TextStyle(fontSize: 16),
           ),
           if (_transcript.isNotEmpty) ...[

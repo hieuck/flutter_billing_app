@@ -88,15 +88,15 @@ class _AddProductPageState extends State<AddProductPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const InputLabel(text: 'Barcode'),
+                  InputLabel(text: AppLocalizations.of(context)!.barcode),
                   Row(
                     children: [
                       Expanded(
                         child: TextFormField(
                           key: ValueKey(_barcode),
                           initialValue: _barcode,
-                          decoration: const InputDecoration(
-                            hintText: 'Scan or enter barcode',
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.barcodeHint,
                           ),
                           validator:
                               AppValidators.required('Please enter a barcode'),
@@ -119,10 +119,10 @@ class _AddProductPageState extends State<AddProductPage> {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text('Tap the icon to open camera scanner',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF4C669A))),
+                  Text(AppLocalizations.of(context)!.openCameraScanner,
+                      style: const TextStyle(fontSize: 12, color: Color(0xFF4C669A))),
                   const SizedBox(height: 24),
-                  const InputLabel(text: 'Product Name'),
+                  InputLabel(text: AppLocalizations.of(context)!.productName),
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: 'e.g. Basmati Rice',
@@ -132,7 +132,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     onSaved: (value) => _name = value!,
                   ),
                   const SizedBox(height: 24),
-                  const InputLabel(text: 'Price'),
+                  InputLabel(text: AppLocalizations.of(context)!.price),
                   TextFormField(
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -148,7 +148,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     onSaved: (value) => _price = double.parse(value!),
                   ),
                   const SizedBox(height: 24),
-                  const InputLabel(text: 'Cost Price'),
+                  InputLabel(text: AppLocalizations.of(context)!.costPrice),
                   TextFormField(
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),

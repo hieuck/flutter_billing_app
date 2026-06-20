@@ -79,7 +79,7 @@ class _ReportPageState extends State<ReportPage> {
     return Row(
       children: [
         _SummaryCard(
-          title: 'Revenue',
+          title: AppLocalizations.of(context)!.revenue,
           amount: _totalRevenue,
           color: Colors.green,
           icon: Icons.trending_up,
@@ -93,7 +93,7 @@ class _ReportPageState extends State<ReportPage> {
         ),
         const SizedBox(width: 12),
         _SummaryCard(
-          title: 'Profit',
+          title: AppLocalizations.of(context)!.profit,
           amount: _netProfit,
           color: AppTheme.primaryColor,
           icon: Icons.account_balance,
@@ -105,14 +105,14 @@ class _ReportPageState extends State<ReportPage> {
   Widget _buildDateFilter() {
     return Row(
       children: [
-        _DateChip('Today', () => _setDateRange(
+        _DateChip(AppLocalizations.of(context)!.today, () => _setDateRange(
             DateTime.now(), DateTime.now())),
         const SizedBox(width: 8),
-        _DateChip('7 Days', () => _setDateRange(
+        _DateChip(AppLocalizations.of(context)!.thisWeek, () => _setDateRange(
             DateTime.now().subtract(const Duration(days: 7)),
             DateTime.now())),
         const SizedBox(width: 8),
-        _DateChip('This Month', () => _setDateRange(
+        _DateChip(AppLocalizations.of(context)!.thisMonth, () => _setDateRange(
             DateTime(DateTime.now().year, DateTime.now().month, 1),
             DateTime.now())),
       ],
@@ -136,8 +136,8 @@ class _ReportPageState extends State<ReportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Revenue',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.revenue,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             SizedBox(
               height: 200,
@@ -196,8 +196,8 @@ class _ReportPageState extends State<ReportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Expenses by Category',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.expensesByCategory,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             SizedBox(
               height: 200,
@@ -246,12 +246,12 @@ class _ReportPageState extends State<ReportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Top Products',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(AppLocalizations.of(context)!.topProducts,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             if (_invoices.isEmpty)
-              const ListTile(
-                  leading: Icon(Icons.inventory), title: Text('No data yet'))
+              ListTile(
+                  leading: const Icon(Icons.inventory), title: Text(AppLocalizations.of(context)!.noData))
             else
               ...(_invoices.length > 5 ? _invoices.sublist(0, 5) : _invoices)
                   .map((inv) => ListTile(
