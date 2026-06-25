@@ -18,20 +18,36 @@ import 'features/ai_assistant/presentation/bloc/assistant_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  String? initError;
   try {
     await HiveDatabase.init();
     await di.init();
   } catch (e) {
+    initError = e.toString();
     debugPrint('Init error: $e');
   }
-  runApp(const MyApp());
+  runApp(MyApp(initError: initError));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? initError;
+  const MyApp({super.key, this.initError});
 
   @override
   Widget build(BuildContext context) {
+    if (initError != null) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Text('Error:\n$initError',
+                  style: const TextStyle(color: Colors.red, fontSize: 16)),
+            ),
+          ),
+        ),
+      );
+    }
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProductBloc>(
@@ -53,7 +69,7 @@ class MyApp extends StatelessWidget {
             create: (context) => di.sl<AssistantBloc>()),
       ],
       child: MaterialApp.router(
-        title: AppLocalizations.of(context)!.appTitle,
+        title: 'Billing App',
         theme: AppTheme.lightTheme,
         routerConfig: router,
         debugShowCheckedModeBanner: false,
