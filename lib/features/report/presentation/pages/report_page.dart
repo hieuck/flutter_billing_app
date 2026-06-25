@@ -259,6 +259,7 @@ class _ReportPageState extends State<ReportPage> {
                         leading: const Icon(Icons.shopping_bag),
                         title: Text('Order #${inv.id.substring(0, 6)}'),
                         trailing: Text(CurrencyHelper.format(inv.totalAmount)),
+                      )),
           ],
         ),
       ),
